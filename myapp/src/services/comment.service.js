@@ -3,6 +3,7 @@ import axios from "axios";
 const BASE_URL = 'http://localhost:3001';
 
 const CommentService = {
+    // Get all comments
     getAllComments: async () => {
         try {
             const resp = await axios.get(`${BASE_URL}/comments`);
@@ -12,6 +13,7 @@ const CommentService = {
         }
     },
 
+    // Get comments by commenter ID
     getCommentsByCommenterId: async (commenterId) => {
         try {
             const resp = await axios.get(`${BASE_URL}/comments/commenter/${commenterId}`);
@@ -21,6 +23,7 @@ const CommentService = {
         }
     },
 
+    // Get comments by suggestion ID
     getCommentsBySuggestionId: async (suggestionId) => {
         try {
             const resp = await axios.get(`${BASE_URL}/comments/suggestion/${suggestionId}`);
@@ -30,6 +33,7 @@ const CommentService = {
         }
     },
 
+    // Create a new comment
     createComment: async (commentData) => {
         try {
             const resp = await axios.post(`${BASE_URL}/comment`, commentData);
@@ -39,6 +43,7 @@ const CommentService = {
         }
     },
 
+    // Delete a comment by comment ID
     deleteComment: async (commentId) => {
         try {
             const resp = await axios.delete(`${BASE_URL}/comment/${commentId}`);

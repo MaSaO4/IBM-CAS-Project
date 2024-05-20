@@ -1,9 +1,10 @@
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import { templates } from './EmailTemplates.js';
 
-dotenv.config()
+dotenv.config();
 
+// Create transporter for sending emails
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -14,15 +15,23 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendEmail = (eTo,eSubject,templateName,data)=>{
-    console.log(templateName)
+/**
+ * Sends an email using nodemailer.
+ * @param {Object} eTo - Email recipient information
+ * @param {string} eSubject - Email subject
+ * @param {string} templateName - Name of the email template
+ * @param {Object} data - Data to be used in the email template
+ * @returns {Promise<Object>} - Promise that resolves to the result of sending the email
+ */
+const sendEmail = (eTo, eSubject, templateName, data) => {
+    console.log(templateName);
     const templateFunction = templates[templateName];
     if (!templateFunction) {
         throw new Error(`Template '${templateName}' not found.`);
     }
-    console.log(data)
-    const body = templateFunction(data)
-    console.log(body)
+    console.log(data);
+    const body = templateFunction(data);
+    console.log(body);
     const mailOptions = {
         from: 'fiqbal997@gmail.com',
         to: eTo.email,
@@ -30,16 +39,15 @@ const sendEmail = (eTo,eSubject,templateName,data)=>{
         html: body
     };
     
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 reject(error);
             } else {
                 resolve(info);
             }
-        })
+        });
     });
-}
+};
 
-
-export{sendEmail}
+export { sendEmail };

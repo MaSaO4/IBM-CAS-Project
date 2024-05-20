@@ -29,7 +29,7 @@ const getSuggestionByCreator = async (creatorId) => {
     console.log('suggestion service');
     console.log(creatorId);
     try {
-        const suggestion = await Suggestion.find({creator:creatorId});
+        const suggestion = await Suggestion.find({ creator: creatorId });
         return suggestion;
     } catch (error) {
         throw new Error('Failed to fetch suggestion by ID');
@@ -44,8 +44,8 @@ const createSuggestion = async (suggestionData) => {
         await suggestion.save();
         return suggestion;
     } catch (error) {
-            throw new Error('Suggestion entry failed. Please try again.');
-        }
+        throw new Error('Suggestion entry failed. Please try again.');
+    }
 };
 
 
@@ -65,7 +65,7 @@ const updateSuggestion = async (suggestionId, updatedData) => {
     }
 };
 
-const upvoteSuggestion = async (suggestionId,userId) => {
+const upvoteSuggestion = async (suggestionId, userId) => {
 
     try {
         const user = await userService.getUserById(userId);
@@ -84,12 +84,12 @@ const upvoteSuggestion = async (suggestionId,userId) => {
             throw new Error('User has already upvoted');
         }
         suggestion.votes.push(userId);
-       return await suggestion.save();
+        return await suggestion.save();
     } catch (error) {
-         throw error
+        throw error
     }
 }
 
-const suggestionService = {getAllSuggestions,getSuggestionById, getSuggestionByCreator,createSuggestion, updateSuggestion ,upvoteSuggestion};
+const suggestionService = { getAllSuggestions, getSuggestionById, getSuggestionByCreator, createSuggestion, updateSuggestion, upvoteSuggestion };
 
 export default suggestionService;

@@ -1,5 +1,6 @@
-import commentService from "../services/comment.service.js"
+import commentService from "../services/comment.service.js";
 
+// Controller function to get all comments
 const getAllComments = async (req, res) => {
     try {
         const comments = await commentService.getAllComments();
@@ -9,6 +10,7 @@ const getAllComments = async (req, res) => {
     }
 };
 
+// Controller function to get comments by commenter ID
 const getCommentByCommenterId = async (req, res) => {
     const commenterId = req.params.id; 
     try {
@@ -19,6 +21,7 @@ const getCommentByCommenterId = async (req, res) => {
     }
 };
 
+// Controller function to get comments by suggestion ID
 const getCommentBySuggestionId = async (req, res) => {
     const suggestionId = req.params.id; 
     try {
@@ -29,6 +32,7 @@ const getCommentBySuggestionId = async (req, res) => {
     }
 };
 
+// Controller function to create a new comment
 const createComment = async (req, res) => {
     try {
         const comment = await commentService.createComment(req.body);
@@ -38,6 +42,7 @@ const createComment = async (req, res) => {
     }
 };
 
+// Controller function to delete a comment by ID
 const deleteComment = async (req, res) => {
     const id = req.params.id;
     try {

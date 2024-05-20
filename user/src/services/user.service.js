@@ -1,8 +1,10 @@
 import User from '../models/user.model.js';
 
-
+/**
+ * Retrieves all users with role 'Citizen'
+ * @returns {Promise} Promise object representing the list of citizen users
+ */
 const getAllCitizenUsers = async () => {
-    console.log('service');
     try {
         const users = await User.find({ role: 'Citizen' });
         return users;
@@ -11,19 +13,25 @@ const getAllCitizenUsers = async () => {
     }
 };
 
+/**
+ * Retrieves all users with role 'Employee'
+ * @returns {Promise} Promise object representing the list of employee users
+ */
 const getAllEmployees = async () => {
-    console.log('service');
     try {
         const users = await User.find({ role: 'Employee' });
         return users;
     } catch (error) {
-        throw new Error('Failed to fetch employee');
+        throw new Error('Failed to fetch employees');
     }
 };
 
+/**
+ * Retrieves a user by their ID
+ * @param {string} userId - The ID of the user to retrieve
+ * @returns {Promise} Promise object representing the user
+ */
 const getUserById = async (userId) => {
-    console.log('service');
-    console.log(userId);
     try {
         const user = await User.findById(userId);
         return user;
@@ -32,36 +40,45 @@ const getUserById = async (userId) => {
     }
 };
 
+/**
+ * Retrieves a user by their username
+ * @param {string} username - The username of the user to retrieve
+ * @returns {Promise} Promise object representing the user
+ */
 const getUserByUserName = async (username) => {
-    console.log('service');
-    console.log(username);
     try {
         const user = await User.findOne({ username });
         return user;
     } catch (error) {
-        throw new Error('Failed to fetch user by ID');
+        throw new Error('Failed to fetch user by username');
     }
 };
 
+/**
+ * Registers a new user
+ * @param {object} userData - Data of the user to register
+ * @returns {Promise} Promise object representing the registered user
+ */
 const registerUser = async (userData) => {
-    console.log('service');
-    console.log(userData);
     try {
         const user = new User(userData);
         await user.save();
         return user;
     } catch (error) {
         if (error.message.includes('duplicate key')) {
-            throw new Error(`USER_ALREADY_EXIST: User with ${userData.username} already exist!`);
+            throw new Error(`USER_ALREADY_EXIST: User with username ${userData.username} already exists!`);
         } else {
             throw new Error('Registration failed. Please try again.');
         }
     }
 };
 
+/**
+ * Authenticates a user during login
+ * @param {object} credentials - User login credentials
+ * @returns {Promise} Promise object representing the authenticated user
+ */
 const loginUser = async (credentials) => {
-    console.log('service');
-    console.log(credentials);
     const { username, password } = credentials;
     try {
         const user = await User.findOne({ username });
@@ -74,6 +91,12 @@ const loginUser = async (credentials) => {
     }
 };
 
+/**
+ * Updates the profile of a user
+ * @param {string} userId - The ID of the user to update
+ * @param {object} updatedData - Updated user data
+ * @returns {Promise} Promise object representing the updated user
+ */
 const updateUserProfile = async (userId, updatedData) => {
     try {
         const user = await User.findByIdAndUpdate(userId, updatedData, { new: true });
@@ -86,17 +109,30 @@ const updateUserProfile = async (userId, updatedData) => {
     }
 };
 
+/**
+ * Deletes an employee user by their ID
+ * @param {string} employeeId - The ID of the employee to delete
+ * @returns {Promise} Promise object representing the deletion status
+ */
 const deleteEmployee = async (employeeId) => {
-
     try {
         const resp = await User.findByIdAndDelete(employeeId)
         return resp
     } catch (error) {
         throw new Error('Failed to delete employee');
     }
-      
-}
+};
 
-const userService = {getAllCitizenUsers, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee };
+// Define service object with all user-related functions
+const userService = {
+    getAllCitizenUsers,
+    getAllEmployees,
+    getUserById,
+    getUserByUserName,
+    registerUser,
+    loginUser,
+    updateUserProfile,
+    deleteEmployee
+};
 
 export default userService;

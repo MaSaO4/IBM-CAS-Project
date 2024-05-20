@@ -1,6 +1,10 @@
 import Comment from '../models/comment.model.js';
 
-// Create a comment
+/**
+ * Create a new comment.
+ * @param {Object} commentData - Data for the new comment
+ * @returns {Promise<Object>} - Saved comment object
+ */
 const createComment = async (commentData) => {
   const newComment = new Comment(commentData);
   try {
@@ -11,7 +15,10 @@ const createComment = async (commentData) => {
   }
 };
 
-// Get all comments
+/**
+ * Get all comments.
+ * @returns {Promise<Array>} - Array of comments
+ */
 const getAllComments = async () => {
   try {
     const comments = await Comment.find().populate('creator').populate('suggestion');
@@ -21,7 +28,11 @@ const getAllComments = async () => {
   } 
 };
 
-// Get a specific comment by ID
+/**
+ * Get comments created by a specific user.
+ * @param {string} creatorId - ID of the comment creator
+ * @returns {Promise<Object>} - Comment created by the specified user
+ */
 const getCommentByCreatorId = async (creatorId) => {
   try {
       const comment = await Comment.findOne({creator: creatorId})
@@ -31,17 +42,24 @@ const getCommentByCreatorId = async (creatorId) => {
   }
 };
 
+/**
+ * Get comments associated with a specific suggestion.
+ * @param {string} suggestionId - ID of the suggestion
+ * @returns {Promise<Array>} - Comments associated with the suggestion
+ */
 const getCommentBySuggestionId = async (suggestionId) => {
   try {
-    console.log(suggestionId)
-      const suggestion = await Comment.find({suggestion: suggestionId}).populate('creator', 'name')
-      return suggestion;
+    const suggestion = await Comment.find({suggestion: suggestionId}).populate('creator', 'name')
+    return suggestion;
   } catch (error) {
       throw new Error('Failed to fetch suggestion by suggestion ID');
   }
 };
 
-// Delete a comment by ID
+/**
+ * Delete a comment by its ID.
+ * @param {string} commentId - ID of the comment to delete
+ */
 const deleteComment = async (commentId) => {
   try {
     await Comment.findByIdAndDelete(commentId);
@@ -50,7 +68,7 @@ const deleteComment = async (commentId) => {
   }
 };
 
-const commentService =  {
+const commentService = {
   createComment,
   getAllComments,
   getCommentByCreatorId,

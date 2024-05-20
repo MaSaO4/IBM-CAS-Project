@@ -1,7 +1,6 @@
-//Editing now
 import suggestionService from '../services/suggestion.service.js';
 
-
+// Controller function to get all suggestions
 const getAllSuggestions = async (req, res,) => {
     console.log('suggestion controller');
     try {
@@ -12,6 +11,7 @@ const getAllSuggestions = async (req, res,) => {
     }
 };
 
+// Controller function to get a suggestion by ID
 const getSuggestionById = async (req, res) => {
     console.log('suggestion controller');
     const suggestionId = req.params.id;
@@ -20,13 +20,13 @@ const getSuggestionById = async (req, res) => {
         if (!suggestion) {
             return res.status(404).json({ message: 'Suggestion not found' });
         }
-        // req.user = user; 
         res.status(200).json(suggestion);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+// Controller function to get suggestions by creator
 const getSuggestionByCreator = async (req, res) => {
     console.log('suggestion controller');
     const creatorId = req.params.id;
@@ -35,13 +35,13 @@ const getSuggestionByCreator = async (req, res) => {
         if (!suggestion) {
             return res.status(404).json({ message: 'Suggestion not found' });
         }
-        // req.user = user; 
         res.status(200).json(suggestion);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+// Controller function to create a new suggestion
 const createSuggestion = async (req, res) => {
     console.log('suggestion controller');
     console.log(req.body);
@@ -54,6 +54,7 @@ const createSuggestion = async (req, res) => {
     }
 };
 
+// Controller function to update a suggestion
 const updateSuggestion = async (req, res) => {
     console.log('suggestion controller');
     console.log(req.body);
@@ -69,6 +70,7 @@ const updateSuggestion = async (req, res) => {
     }
 };
 
+// Controller function to upvote a suggestion
 const upvoteSuggestion = async (req, res) => {
     const suggestionId  = req.params.id;
     const userId = req.body.creator;
@@ -84,7 +86,5 @@ const upvoteSuggestion = async (req, res) => {
         res.status(400).json({message:error.message})
     }
 }
-
-
 
 export { getAllSuggestions, getSuggestionById, getSuggestionByCreator, createSuggestion, updateSuggestion, upvoteSuggestion };

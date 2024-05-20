@@ -1,6 +1,9 @@
 import Complaint from "../models/complaint.model.js";
 
-
+/**
+ * Fetches all complaints.
+ * @returns {Promise<Array>} - Array of complaints
+ */
 const getAllComplaints = async () => {
     console.log('complaint service')
     try {
@@ -12,6 +15,11 @@ const getAllComplaints = async () => {
     }
 };
 
+/**
+ * Fetches a complaint by its ID.
+ * @param {string} id - ID of the complaint
+ * @returns {Promise<Object>} - Complaint object
+ */
 const getComplaintById = async (id) => {
     try {
         const complaint = await Complaint.findById(id);
@@ -21,6 +29,11 @@ const getComplaintById = async (id) => {
     }
 };
 
+/**
+ * Fetches a complaint by its complaint ID.
+ * @param {string} complaintId - Complaint ID
+ * @returns {Promise<Object>} - Complaint object
+ */
 const getComplaintByComplaintId = async (complaintId) => {
     try {
         const complaint = await Complaint.findOne({complaintId: complaintId}).populate('creator','name')
@@ -31,6 +44,11 @@ const getComplaintByComplaintId = async (complaintId) => {
     }
 };
 
+/**
+ * Fetches complaints created by a specific user.
+ * @param {string} creatorId - ID of the complaint creator
+ * @returns {Promise<Array>} - Array of complaints created by the user
+ */
 const getComplaintByCreatorId = async (creatorId) => {
     try {
         const complaint = await Complaint.find({creator: creatorId})
@@ -40,6 +58,11 @@ const getComplaintByCreatorId = async (creatorId) => {
     }
 };
 
+/**
+ * Creates a new complaint.
+ * @param {Object} complaintData - Data for the new complaint
+ * @returns {Promise<Object>} - Created complaint object
+ */
 const createComplaint = async (complaintData) => {
     try {
         const complaint = new Complaint(complaintData);
@@ -56,7 +79,12 @@ const createComplaint = async (complaintData) => {
     }
 };
 
-
+/**
+ * Updates an existing complaint.
+ * @param {string} id - ID of the complaint to update
+ * @param {Object} updatedData - Updated data for the complaint
+ * @returns {Promise<Object>} - Updated complaint object
+ */
 const updateComplaint = async (id, updatedData) => {
     try {
         const complaint = await Complaint.findByIdAndUpdate(id, updatedData, { new: true });
@@ -69,5 +97,13 @@ const updateComplaint = async (id, updatedData) => {
     }
 };
 
-const complaintService =  {getAllComplaints, getComplaintById,getComplaintByComplaintId, getComplaintByCreatorId, createComplaint,updateComplaint}
+const complaintService = {
+    getAllComplaints,
+    getComplaintById,
+    getComplaintByComplaintId,
+    getComplaintByCreatorId,
+    createComplaint,
+    updateComplaint
+};
+
 export default complaintService;

@@ -153,7 +153,6 @@ const ShowSuggestion = (props) => {
 
     const handleUpvote = async (suggestionId) => {
         try {
-            console.log(suggestionId, userId);
             await SuggestionService.upvoteSuggestion(suggestionId, userId);
             fetchSuggestions(); // Refresh suggestions after upvoting
         } catch (error) {

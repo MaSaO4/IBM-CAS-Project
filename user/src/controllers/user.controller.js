@@ -2,7 +2,7 @@ import userService from '../services/user.service.js';
 import { generateToken } from '../services/auth.service.js';
 import { sendEmail } from '../services/email.service.js';
 
-
+// Controller function to get all citizen users
 const getAllCitizens = async (req, res,) => {
     console.log('controller');
     try {
@@ -13,6 +13,7 @@ const getAllCitizens = async (req, res,) => {
     }
 };
 
+// Controller function to get all employee users
 const getAllEmployees = async (req, res,) => {
     console.log('controller');
     try {
@@ -23,6 +24,7 @@ const getAllEmployees = async (req, res,) => {
     }
 };
 
+// Controller function to get a user by ID
 const getUserById = async (req, res) => {
     console.log('controller');
     const userId = req.params.id;
@@ -38,6 +40,7 @@ const getUserById = async (req, res) => {
     }
 };
 
+// Controller function to get a user by username
 const getUserByUserName = async (req, res) => {
     console.log('controller');
     try {
@@ -55,6 +58,7 @@ const getUserByUserName = async (req, res) => {
     }
 };
 
+// Controller function to register a new user
 const registerUser = async (req, res) => {
     console.log('controller');
     console.log(req.body);
@@ -68,12 +72,12 @@ const registerUser = async (req, res) => {
     }
 };
 
+// Controller function to login a user
 const loginUser = async (req, res) => {
     console.log('controller');
     console.log(req.body);
     try {
         const user = await userService.loginUser(req.body);
-        // req.user = user; // Attach user object to req
         const token = generateToken(user);
         res.status(200).json({ user, token,'registration:':user.registrationDate.getFullYear});
     } catch (error) {
@@ -81,6 +85,7 @@ const loginUser = async (req, res) => {
     }
 };
 
+// Controller function to update a user's profile
 const updateUserProfile = async (req, res) => {
     console.log('controller');
     console.log(req.body);
@@ -95,6 +100,7 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
+// Controller function to delete an employee
 const deleteEmployee = async (req,res)=>{
     const employeeId = req.params.id;
     try {

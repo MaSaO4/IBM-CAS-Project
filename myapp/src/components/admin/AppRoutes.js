@@ -1,32 +1,35 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Nav from './Nav'
-import EmpList from './EmpList'
-import AddEmp from './AddEmp'
-import LogOut from './LogOut'
-import AdminProfile from './AdminProfile'
-import {useSelector} from 'react-redux'
-import AdminLogin from './Login'
-
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Nav from './Nav';
+import EmpList from './EmpList';
+import AddEmp from './AddEmp';
+import LogOut from './LogOut';
+import AdminProfile from './AdminProfile';
+import { useSelector } from 'react-redux';
+import AdminLogin from './Login';
 
 const AdminAppRoutes = () => {
-
-  const isLoggedIn = useSelector(status=>status.admin.isLoggedIn)
-
+  // Check if the admin is logged in
+  const isLoggedIn = useSelector((status) => status.admin.isLoggedIn);
 
   return (
     <>
-    <Nav /> 
+      {/* Navigation component */}
+      <Nav />
       <Routes>
-        {!isLoggedIn && <Route path='/login' element={<AdminLogin /> }></Route>}
-        <Route path='*' Component={AdminLogin}></Route>
-        {isLoggedIn && <Route path='/emplist' element={<EmpList />}></Route>}
-        {isLoggedIn && <Route path='/addemp' Component={AddEmp}></Route>}
-        {isLoggedIn && <Route path='/profile' element={<AdminProfile />}></Route>}
-        <Route path='/logout' element={<LogOut />}></Route>
+        {/* Route for AdminLogin component if not logged in */}
+        {!isLoggedIn && <Route path='/login' element={<AdminLogin />} />}
+        {/* Default route to AdminLogin component */}
+        <Route path='*' component={AdminLogin} />
+        {/* Routes accessible only if logged in */}
+        {isLoggedIn && <Route path='/emplist' element={<EmpList />} />}
+        {isLoggedIn && <Route path='/addemp' component={AddEmp} />}
+        {isLoggedIn && <Route path='/profile' element={<AdminProfile />} />}
+        {/* Route for logging out */}
+        <Route path='/logout' element={<LogOut />} />
       </Routes>
     </>
-  )
-}
+  );
+};
 
-export default AdminAppRoutes
+export default AdminAppRoutes;

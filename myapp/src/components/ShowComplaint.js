@@ -24,19 +24,17 @@ const ShowComplaint = () => {
   const fetchComplaints = () => {
     if (isEmployee) {
       ComplaintService.getAllComplaints(userId).then((resp) => {
-        console.log(resp);
         setComplaints(resp.data);
         setFilteredComplaints(resp.data); // Initially set filtered complaints to all complaints
       }).catch((error) => {
-        console.log(error);
+        console.error('Error fetching complaints:', error);
       });
     } else {
       ComplaintService.getComplaintByCreatorId(userId).then((resp) => {
-        console.log(resp.data);
         setComplaints(resp.data);
         setFilteredComplaints(resp.data); // Initially set filtered complaints to all complaints
       }).catch((error) => {
-        console.log(error);
+        console.error('Error fetching complaints:', error);
       });
     }
   };
